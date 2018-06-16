@@ -1,12 +1,16 @@
 <?php
+declare (strict_types = 1);
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Traits\JsonResponseTrait;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
+    use JsonResponseTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -29,7 +33,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -40,12 +44,16 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ValidationException && $request->expectsJson()) {
+            return $this->invalidResponse($exception->errors(), $exception->getMessage());
+        }
+        
         return parent::render($request, $exception);
     }
 }
