@@ -33,5 +33,6 @@ class RegisterTest extends TestCase
         $this->assertEquals($email, $response->json('result.email'));
         $this->assertEquals(trans('auth.register'), $response->json('message'));
         $response->assertSuccessful();
+        $response->assertHeader('access_token');
     }
 }
