@@ -28,6 +28,10 @@ class RegisterTest extends TestCase
 
         $user = User::whereEmail($email)->first();
         $this->assertNotNull($user);
+        $this->assertEquals($name, $response->json('result.name'));
+        $this->assertEquals($user->id, $response->json('result.id'));
+        $this->assertEquals($email, $response->json('result.email'));
+        $this->assertEquals(trans('auth.register'), $response->json('message'));
         $response->assertSuccessful();
     }
 }
