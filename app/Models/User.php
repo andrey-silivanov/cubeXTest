@@ -3,35 +3,39 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\{
-    Builder
-};
-use App\Models\EloquentModel;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
+ *
  * @package App\Models
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @mixin \Eloquent
  */
-class User extends EloquentModel
+class User extends Authenticatable
 {
+    use Notifiable;
     /**
      * @var string
      */
-    protected $table = 'model_table_name';
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
      * @var array
      */
     protected $fillable = [
-        // @todo:
+        'name',
+        'email',
+        'password'
     ];
 
     /**
      * The attributes that should be hidden for arrays.
      * @var array
      */
-    protected $hidden = [];
+    protected $hidden = ['password'];
 
     /**
      * The attributes that should be cast to native types.
@@ -78,6 +82,4 @@ class User extends EloquentModel
     /**
      * Entity public methods go below
      */
-
-    // @todo:
 }
