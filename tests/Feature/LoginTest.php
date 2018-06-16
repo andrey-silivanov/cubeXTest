@@ -19,10 +19,7 @@ class LoginTest extends TestCase
      * @var User
      */
     protected $user;
-    
-    protected function setUp()
-    {
-        parent::setUp();
+    protected function setUp(){parent::setUp();
         $this->user = factory(User::class)->create([
             'password' => bcrypt('123456'),
         ]);
