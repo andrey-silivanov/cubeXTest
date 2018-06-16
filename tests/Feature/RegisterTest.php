@@ -26,9 +26,10 @@ class RegisterTest extends TestCase
         $password = '123456';
 
         $response = $this->postJson(route('register'), [
-            'name'     => $name,
-            'email'    => $email,
-            'password' => $password
+            'name'                  => $name,
+            'email'                 => $email,
+            'password'              => $password,
+            'password_confirmation' => $password
         ]);
 
         $user = User::whereEmail($email)->first();
