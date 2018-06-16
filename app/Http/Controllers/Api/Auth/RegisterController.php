@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Class RegisterController
@@ -26,12 +27,12 @@ class RegisterController extends ApiController
             'name' => 'required',
             'password' => 'required|confirmed',
         ]);
-        
+
         $user = $this->createUser($request->only('name', 'email', 'password'));
-        $token = \JWTAuth::fromUser($user);
+        $token = JWTAuth::fromUser($user);
 
         return $this->successResponse(
-            $this->transformDataForResponse(new UserResource($user)), trans('auth.register'),
+            $this->transformDataForResponse(new UserResource($user)), trans('auth.login'),
                 ['access_token' => $token]
             );
     }
