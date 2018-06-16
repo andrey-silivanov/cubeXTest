@@ -21,6 +21,12 @@ class RegisterController extends ApiController
      */
     public function register(Request $request): JsonResponse
     {
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email',
+            'name' => 'required',
+            'password' => 'required|confirmed',
+        ]);
+        
         $user = $this->createUser($request->only('name', 'email', 'password'));
         $token = \JWTAuth::fromUser($user);
 
