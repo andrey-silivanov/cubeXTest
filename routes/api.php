@@ -15,10 +15,16 @@ use Illuminate\Http\Request;
 
 Route::group([
     'namespace' => 'Auth',
-    'prefix' => 'auth'
+    'prefix'    => 'auth'
 ], function () {
-   Route::post('register', [
-       'as' => 'register',
-       'uses' => 'RegisterController@register'
-   ]); 
+
+    Route::post('register', [
+        'as'   => 'register',
+        'uses' => 'RegisterController@register'
+    ]);
+
+    Route::post('login', [
+        'as'   => 'login',
+        'uses' => 'LoginController@login'
+    ]);
 });
