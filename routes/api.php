@@ -27,4 +27,8 @@ Route::group([
         'as'   => 'login',
         'uses' => 'LoginController@login'
     ]);
+
+    Route::get('/home', function() {
+        return new \App\Http\Resources\UserResource(Auth::user());
+    })->middleware('auth.jwt');
 });
