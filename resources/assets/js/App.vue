@@ -1,18 +1,17 @@
 <template>
     <div id="app">
-        <header>
-            <span>Vue.js PWA</span>
-            <router-link :to="{ name: 'login' }">Login</router-link>
-            <router-link :to="{ name: 'register' }">Register</router-link>
-        </header>
+        <!--<navBar />-->
         <main>
             <router-view></router-view>
         </main>
     </div>
 </template>
-
 <script>
+    import navBar from './components/navbar'
     export default {
         name: 'app',
+        components: {
+            navBar
+        }
     };
 </script>

@@ -3,24 +3,32 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Login from './../pages/login'
-import Register from './../pages/register'
+import Auth from '../pages/auth'
+import Login from '../pages/auth/login'
+import Register from '../pages/auth/register'
 
 const routes = [
     {
         path: '/',
-        redirect: { name: 'login' }
+        redirect: { name: 'auth' }
     },
     {
-        path: '/register',
-        name: 'register',
-        component: Register
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login
-    },
+        path: '/auth',
+        name: 'auth',
+        component: Auth,
+        children: [
+            {
+                path: 'register',
+                name: 'register',
+                component: Register
+            },
+            {
+                path: 'login',
+                name: 'login',
+                component: Login
+            }
+        ]
+    }
 ]
 
 const router = new VueRouter({
