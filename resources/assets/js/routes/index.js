@@ -7,11 +7,12 @@ import Auth from '../pages/auth'
 import Login from '../pages/auth/login'
 import Register from '../pages/auth/register'
 import Home from '../pages/home'
+import NotFound from '../pages/error/notFoundPage'
 
 const routes = [
     {
         path: '/',
-        redirect: { name: 'auth' }
+        redirect: { name: 'login' }
     },
     {
         path: '/auth',
@@ -22,12 +23,12 @@ const routes = [
         },
         children: [
             {
-                path: 'register',
+                path: '/register',
                 name: 'register',
                 component: Register
             },
             {
-                path: 'login',
+                path: '/login',
                 name: 'login',
                 component: Login
             }
@@ -40,6 +41,15 @@ const routes = [
         meta: {
             auth: true
         }
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: NotFound,
+    },
+    {
+        path: '*',
+        redirect: '/404'
     }
 ]
 

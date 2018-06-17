@@ -47,10 +47,7 @@
                 email: false,
                 password: false
             },
-            errors: {},
-            colorAlert:'danger',
-            titleAlert: 'Error',
-            activeAlert:false,
+            errors: {}
         }),
         methods: {
             send () {
@@ -63,9 +60,7 @@
                         email: this.email,
                         password: this.password
                     },
-                    success () {
-                        alert('success')
-                    },
+                    success () {},
                     error(err) {
                         this.errors = err.response.data.errors;
                     },
