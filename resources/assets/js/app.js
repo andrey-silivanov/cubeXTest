@@ -17,13 +17,6 @@ window.Vue = require('vue');
 
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css' //vuesax styles
-
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-
-Vue.use(VueAxios, axios);
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
-
 Vue.use(Vuesax, {
     theme:{
         colors:{
@@ -36,6 +29,12 @@ Vue.use(Vuesax, {
     }
 })
 
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(VueAxios, axios);
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+
 import Router from './routes'
 import App from './App'
 
@@ -45,7 +44,8 @@ Vue.use(require('@websanova/vue-auth'), {
     auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-    authRedirect: '/auth/login'
+    authRedirect: '/login',
+    forbiddenRedirect: '/home'
 })
 
 App.router = Vue.router

@@ -1,17 +1,18 @@
 <template>
     <div id="app">
-        <!--<navBar />-->
-        <main>
+        <main :style="{height: windowHeight}">
             <router-view></router-view>
         </main>
     </div>
 </template>
-<script>
-    import navBar from './components/navbar'
+<script type="text/babel">
     export default {
         name: 'app',
-        components: {
-            navBar
+        data: () => ({
+            windowHeight: 0
+        }),
+        created() {
+            this.windowHeight = `${window.innerHeight}px`
         }
     };
 </script>

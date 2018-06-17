@@ -1,14 +1,19 @@
 <template>
-    <vs-topbar vs-color="primary">
-        <vs-button vs-color-text="rgb(255, 255, 255)" vs-color="rgba(255, 255, 255, 0.3)" vs-type="dark-flat" vs-radius="50%" vs-icon="menu"></vs-button>
-        <h4>This is my cool application topbar title</h4>
-        <vs-button vs-color-text="rgb(255, 255, 255)" vs-color="rgba(255, 255, 255, 0.3)" vs-type="dark-flat" >Home</vs-button>
-        <vs-button vs-color-text="rgb(255, 255, 255)" vs-color="rgba(255, 255, 255, 0.3)" vs-type="dark-flat" >Documents</vs-button>
-        <vs-button vs-color-text="rgb(255, 255, 255)" vs-color="rgba(255, 255, 255, 0.3)" vs-type="dark-flat" vs-radius="50%" vs-icon="more_vert" style="margin-left: auto;"></vs-button>
+    <vs-topbar vs-color="rgb(30, 199, 135)">
+        <h4>CUBEX</h4>
+        <a href="#" @click.prevent="$auth.logout()">
+            <vs-button v-if="$auth.check()" vs-color-text="rgb(40, 40, 40)" vs-color="rgba(40, 40, 40)"
+                       vs-type="dark-flat">
+                Logout
+            </vs-button>
+        </a>
     </vs-topbar>
 </template>
 <script type="text/babel">
-    export default ({
-
-    })
+    export default ({})
 </script>
+<style scoped>
+    .vs-button-text{
+        color: #232323!important
+    }
+</style>
