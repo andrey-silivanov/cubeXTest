@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +25,13 @@ Route::group([
         'uses' => 'LoginController@login'
     ]);
 
-    Route::get('/home', function() {
+    Route::post('logout', [
+        'as'         => 'logout',
+        'middleware' => 'auth.jwt',
+        'uses'       => 'LoginController@logout'
+    ]);
+
+    Route::get('/home', function () {
         return new \App\Http\Resources\UserResource(Auth::user());
     })->middleware('auth.jwt');
 });

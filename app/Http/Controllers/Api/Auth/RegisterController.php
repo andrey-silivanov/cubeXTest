@@ -33,7 +33,7 @@ class RegisterController extends ApiController
 
         return $this->successResponse(
             $this->transformDataForResponse(new UserResource($user)), trans('auth.register'),
-                ['access_token' => $token]
+                ['Authorization' => $token]
             );
     }
 

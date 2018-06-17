@@ -20,6 +20,8 @@ class LoginController extends ApiController
     use AuthenticatesUsers;
 
     /**
+     * Login user
+     * 
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
@@ -42,7 +44,19 @@ class LoginController extends ApiController
     {
         return $this->successResponse(
             $this->transformDataForResponse(new UserResource($user)), trans('auth.login'),
-            ['access_token' => JWTAuth::fromUser($user)]
+            ['Authorization' => JWTAuth::fromUser($user)]
         );
+    }
+
+    /**
+     * Logout
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        JWTAuth::invalidate();
+
+        return $this->noContentResponse();
     }
 }
