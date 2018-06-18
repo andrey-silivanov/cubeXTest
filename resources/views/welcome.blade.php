@@ -11,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
         <!-- Styles -->
-
+        <link rel="stylesheet" href="{{mix('css/app.css')}}">
     </head>
     <body>
         <div id="app"></div>

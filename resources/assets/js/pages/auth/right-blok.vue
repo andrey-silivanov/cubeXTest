@@ -2,7 +2,7 @@
     <div class="right-block">
         <transition name="fadeOne">
             <div v-show="show" class="container">
-                <p class="One">CUBEX</p>
+                <p class="One">Test</p>
             </div>
         </transition>
         <transition name="fadeTwo">

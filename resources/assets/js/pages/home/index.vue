@@ -1,5 +1,5 @@
 <template>
-    <div class="home-wrapper">
+    <div class="page-wrapper">
         <navBar/>
         <vs-row class="full-height" v-if="showForm">
             <userForm/>
@@ -26,21 +26,3 @@
         }
     })
 </script>
-<style>
-    .full-height {
-        height: 100%;
-    }
-
-    .home-wrapper {
-        background: #232323;
-        height: 100%;
-    }
-
-    .vs-card {
-        background: #ffffff;
-    }
-
-    .form-wrapper {
-        width: 100%;
-    }
-</style>

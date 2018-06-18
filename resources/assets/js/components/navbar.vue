@@ -1,12 +1,14 @@
 <template>
-    <vs-topbar vs-color="rgb(30, 199, 135)">
-        <h4>CUBEX</h4>
+    <vs-topbar vs-color="rgb(30, 199, 135)" id="topBar">
+        <h4>Test</h4>
         <a href="#" @click.prevent="$auth.logout()">
             <vs-button v-if="$auth.check()" vs-color-text="rgb(40, 40, 40)" vs-color="rgba(40, 40, 40)"
                        vs-type="dark-flat">
                 Logout
             </vs-button>
         </a>
+        <router-link :to="{name: 'admin'}" class="nav-link" active-class="active"> Admin  </router-link>
+        <router-link :to="{name: 'home'}" class="nav-link" active-class="active"> Home </router-link>
     </vs-topbar>
 </template>
 <script type="text/babel">

@@ -2,13 +2,19 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
-// Variables
-@import "variables";
+.full-height {
+  height: 100%;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+.page-wrapper {
+  background: #232323;
+  height: 100%;
+}
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.vs-card {
+  background: #ffffff;
+}
+
+.form-wrapper {
+  width: 100%;
 }

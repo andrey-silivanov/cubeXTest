@@ -12,7 +12,12 @@
             windowHeight: 0
         }),
         created() {
-            this.windowHeight = `${window.innerHeight}px`
+            this.windowHeight = `${(window.innerHeight - 50)}px`
         }
     };
 </script>
+<style>
+    #topBar {
+        height: 50px;
+    }
+</style>

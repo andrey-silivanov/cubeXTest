@@ -1,5 +1,5 @@
 <template>
-    <vs-col class="full-height" vs-offset="4" v-tooltip="'col - 4'" vs-type="flex" vs-justify="center"
+    <vs-col class="full-height" vs-offset="4" vs-type="flex" vs-justify="center"
             vs-align="center" vs-w="4">
         <div class="form-wrapper">
             <div class="centerx">
@@ -116,6 +116,9 @@
     })
 </script>
 <style>
+    .centerx {
+        width: 100%;
+    }
     .quill-editor {
         margin: 10px;
     }

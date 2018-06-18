@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
 
 window.Vue = require('vue');
 
@@ -17,17 +17,7 @@ window.Vue = require('vue');
 
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css' //vuesax styles
-Vue.use(Vuesax, {
-    theme:{
-        colors:{
-            primary:'#5b3cc4',
-            success:'#1EC787',
-            danger:'rgb(242, 19, 93)',
-            warning:'rgb(255, 130, 0)',
-            dark:'rgb(36, 33, 69)'
-        }
-    }
-})
+Vue.use(Vuesax)
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
