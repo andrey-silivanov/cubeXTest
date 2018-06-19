@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\ApiController,
     Illuminate\Foundation\Auth\AuthenticatesUsers,
     Illuminate\Http\Request,
     Tymon\JWTAuth\Facades\JWTAuth,
-    Illuminate\Http\JsonResponse;
+    Illuminate\Http\JsonResponse,
+    Illuminate\Support\Facades\Auth;
 
 /**
  * Class LoginController
@@ -21,7 +22,7 @@ class LoginController extends ApiController
 
     /**
      * Login user
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
@@ -42,10 +43,33 @@ class LoginController extends ApiController
      */
     protected function authenticated(User $user): JsonResponse
     {
+        return $this->noContentResponse([
+            'Authorization' => JWTAuth::fromUser($user)
+        ]);
+    }
+
+    /**
+     * Return Auth user
+     *
+     * @return JsonResponse
+     */
+    public function user(): JsonResponse
+    {
+        $user = User::findOrFail(Auth::user()->id);
+
         return $this->successResponse(
-            $this->transformDataForResponse(new UserResource($user)), trans('auth.login'),
-            ['Authorization' => JWTAuth::fromUser($user)]
+            $this->transformDataForResponse(new UserResource($user)), trans('auth.login')
         );
+    }
+
+    /**
+     * Refresh and check token
+     *
+     * @return JsonResponse
+     */
+    public function refresh(): JsonResponse
+    {
+        return $this->noContentResponse();
     }
 
     /**

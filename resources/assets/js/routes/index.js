@@ -9,6 +9,7 @@ import Register from '../pages/auth/register'
 import Home from '../pages/home'
 import Admin from '../pages/admin'
 import NotFound from '../pages/error/notFoundPage'
+import ForbiddenPage from '../pages/error/forbidden'
 
 const routes = [
   {
@@ -40,7 +41,11 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      auth: true
+      auth: {
+        roles: 'user',
+        redirect: {name: 'login'},
+        forbiddenRedirect: '/403'
+      }
     }
   },
   {
@@ -50,6 +55,11 @@ const routes = [
     meta: {
       auth: true
     }
+  },
+  {
+    path: '/403',
+    name: '403',
+    component: ForbiddenPage,
   },
   {
     path: '/404',

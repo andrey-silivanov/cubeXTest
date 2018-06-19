@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Http\Resources;
 
@@ -12,12 +13,13 @@ class UserResource extends JsonResource
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id'    => $this->id,
             'name'  => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'role'  => $this->getRole()
         ];
     }
 }

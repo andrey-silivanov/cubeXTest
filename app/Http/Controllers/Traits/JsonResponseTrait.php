@@ -160,7 +160,7 @@ trait JsonResponseTrait
                     unset($data['paginate']);
                     $respData['paginate'] = $paginate;
                 }
-                $respData['result'] = (count($data) == 1) ? $data[0] : $data;
+                $respData['data'] = (count($data) == 1) ? $data[0] : $data;
                 break;
 
             case 422:

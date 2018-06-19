@@ -3,16 +3,13 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Laratrust\Traits\LaratrustUserTrait;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait,
+    Illuminate\Notifications\Notifiable,
+    Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
- *
  * @package App\Models
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
@@ -85,4 +82,13 @@ class User extends Authenticatable
     /**
      * Entity public methods go below
      */
+    /**
+     * Return user role name
+     *
+     * @return string
+     */
+    public function getRole() :string
+    {
+        return $this->roles()->first()->name;
+    }
 }

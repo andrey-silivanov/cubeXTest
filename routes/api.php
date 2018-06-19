@@ -25,13 +25,23 @@ Route::group([
         'uses' => 'LoginController@login'
     ]);
 
-    Route::post('logout', [
-        'as'         => 'logout',
-        'middleware' => 'auth.jwt',
-        'uses'       => 'LoginController@logout'
-    ]);
+    Route::group([
+        'middleware' => 'auth.jwt'
+    ], function () {
+        
+        Route::get('user', [
+            'as'   => 'getUser',
+            'uses' => 'LoginController@user'
+        ]);
 
-    Route::get('/home', function () {
-        return new \App\Http\Resources\UserResource(Auth::user());
-    })->middleware('auth.jwt');
+        Route::get('refresh', [
+            'as'   => 'refresh',
+            'uses' => 'LoginController@refresh'
+        ]);
+
+        Route::post('logout', [
+            'as'         => 'logout',
+            'uses'       => 'LoginController@logout'
+        ]);
+    });
 });
