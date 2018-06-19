@@ -4,11 +4,11 @@
         <div class="form-wrapper">
 
                 <vs-card vs-color="rgb(30, 199, 135)">
-                    <vs-card-header vs-background-color="rgb(30, 199, 135)" vs-title="A nice title"
-                                    vs-subtitle="A nice subtitle" vs-icon="account_circle"></vs-card-header>
+                    <vs-card-header vs-background-color="rgb(30, 199, 135)" vs-title="Send message"
+                                     vs-icon="mail_outline"></vs-card-header>
                     <vs-card-body>
                         <vs-row>
-                            <vs-input vs-color="success" vs-label-placeholder="Success" v-model="title"/>
+                            <vs-input vs-color="success" vs-label-placeholder="Title" v-model="title"/>
                         </vs-row>
                         <vs-row>
                             <quill-editor v-model="body"
@@ -34,8 +34,7 @@
 
                     </vs-card-body>
                     <vs-card-actions>
-                        <vs-button @click="base" vs-color="rgb(40, 40, 40)">Send</vs-button>
-
+                        <vs-button @click="base" class="send-button" vs-color="rgb(40, 40, 40)">SEND</vs-button>
                     </vs-card-actions>
                 </vs-card>
             </div>
@@ -126,6 +125,9 @@
     .quill-editor {
         margin: 10px;
     }
+    .ql-container {
+        min-height:100px !important;
+    }
     .upload_file_wrapper {
         margin: 10px;
     }
@@ -136,5 +138,9 @@
         height: 37px;
         padding: 10px;
         border-radius: 5px;
+    }
+    .send-button {
+        width: 100%;
+        margin: 10px 20px;
     }
 </style>

@@ -35,7 +35,7 @@
         }
     })
 </script>
-<style>
+<style scoped>
     .not-found-page {
         display: block;
     }
