@@ -1,5 +1,5 @@
 <template>
-    <vs-topbar vs-color="rgb(30, 199, 135)" id="topBar">
+    <vs-topbar vs-color="rgb(30, 199, 135)" id="topBar" ref="topBar">
         <h4>Test</h4>
         <a href="#" @click.prevent="$auth.logout()">
             <vs-button v-if="$auth.check()" vs-color-text="rgb(40, 40, 40)" vs-color="rgba(40, 40, 40)"

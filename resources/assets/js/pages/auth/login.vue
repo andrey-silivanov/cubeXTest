@@ -4,6 +4,7 @@
 
         <vs-row>
             <vs-input class="auth-input"
+                    @keyup.enter="login"
                     :vs-valid.sync="validos.email"
                     vs-success-text="Correo Valido"
                     vs-danger-text="The email does not meet the requirements"
@@ -15,6 +16,7 @@
         </vs-row>
         <vs-row>
         <vs-input class="auth-input"
+                @keyup.enter="login"
                 :vs-valid.sync="validos.password"
                 vs-success-text="Field is valid"
                 vs-danger-text="Field must have at least 5 characters"
@@ -27,7 +29,7 @@
 
         <vs-row vs-align="center" vs-type="flex" class="action-block">
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
-                <vs-button vs-color="success" @click="send" vs-type="filled">Login</vs-button>
+                <vs-button vs-color="success" @click="login" vs-type="filled">Login</vs-button>
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
                 <router-link :to="{name: 'register'}" class="nav-link" active-class="active"> Create account
@@ -50,9 +52,6 @@
             errors: {}
         }),
         methods: {
-            send () {
-                this.login()
-            },
             login() {
                 this.errors = {}
                 this.$auth.login({

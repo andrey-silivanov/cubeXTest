@@ -1,9 +1,8 @@
 <template>
     <div class="page-wrapper">
         <navBar/>
-        <vs-row class="full-height" v-if="showForm">
+
             <userForm/>
-        </vs-row>
 
         <countdown v-if="!showForm" date="2018-06-18 08:15:00"></countdown>
 

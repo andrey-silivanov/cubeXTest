@@ -1,7 +1,7 @@
 <template>
     <div class="page-wrapper">
         <navBar/>
-        <vs-row class="full-height">
+        <vs-row :style="{height: windowHeight}">
             <vs-col class="full-height" vs-offset="2" vs-type="flex" vs-justify="center"
                     vs-align="center" vs-w="8">
                 <div class="form-wrapper">
@@ -31,9 +31,15 @@
     import myTable from './table'
 
     export default ({
+        data: () => ({
+            windowHeight: 0
+        }),
         components: {
             navBar,
             myTable
+        },
+        created() {
+            this.windowHeight = `${(window.innerHeight - 50)}px`
         }
     })
 </script>

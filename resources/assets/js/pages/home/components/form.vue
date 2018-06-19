@@ -1,8 +1,8 @@
 <template>
-    <vs-col class="full-height" vs-offset="4" vs-type="flex" vs-justify="center"
+    <vs-col :style="{height: windowHeight}" vs-offset="4" vs-type="flex" vs-justify="center"
             vs-align="center" vs-w="4">
         <div class="form-wrapper">
-            <div class="centerx">
+
                 <vs-card vs-color="rgb(30, 199, 135)">
                     <vs-card-header vs-background-color="rgb(30, 199, 135)" vs-title="A nice title"
                                     vs-subtitle="A nice subtitle" vs-icon="account_circle"></vs-card-header>
@@ -39,7 +39,7 @@
                     </vs-card-actions>
                 </vs-card>
             </div>
-        </div>
+
     </vs-col>
 </template>
 <script type="text/babel">
@@ -69,11 +69,15 @@
                         userOnly: false
                     }
                 }
-            }
+            },
+            windowHeight: 0
         }),
         components: {
             quillEditor,
             VueBase64FileUpload
+        },
+        created() {
+            this.windowHeight = `${(window.innerHeight - 100)}px`
         },
         methods: {
             base() {

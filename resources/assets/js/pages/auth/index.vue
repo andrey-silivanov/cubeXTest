@@ -1,6 +1,6 @@
 <template>
-    <div class="auth-wrapper" :style="{height: windowHeight}">
-        <vs-row vs-align="center" vs-type="flex">
+    <div class="auth-wrapper full-height">
+        <vs-row vs-align="center" vs-type="flex" class="full-height">
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
                 <router-view></router-view>
             </vs-col>
@@ -18,14 +18,8 @@
     import rightBlock from './right-blok';
 
     export default ({
-        data: () => ({
-            windowHeight: 0
-        }),
         components: {
             rightBlock
-        },
-        created() {
-            this.windowHeight = `${window.innerHeight}px`
         }
     })
 </script>
@@ -33,6 +27,7 @@
     $primaryColor: #1EC787;
     .auth-wrapper {
         display: flex;
+        height: 100%;
     }
     .centerx {
         width: 50%;
