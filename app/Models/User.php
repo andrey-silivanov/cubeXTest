@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laratrust\Traits\LaratrustUserTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -16,7 +16,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,
+        LaratrustUserTrait;
+
     /**
      * @var string
      */
