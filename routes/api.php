@@ -28,7 +28,7 @@ Route::group([
     Route::group([
         'middleware' => 'auth.jwt'
     ], function () {
-        
+
         Route::get('user', [
             'as'   => 'getUser',
             'uses' => 'LoginController@user'
@@ -40,8 +40,24 @@ Route::group([
         ]);
 
         Route::post('logout', [
-            'as'         => 'logout',
-            'uses'       => 'LoginController@logout'
+            'as'   => 'logout',
+            'uses' => 'LoginController@logout'
         ]);
     });
 });
+
+/****** Message *****/
+Route::group([
+    'middleware' => 'auth.jwt'
+], function () {
+    Route::group([
+        'middleware' => ['role:user'],
+    ], function () {
+        Route::post('message/send', [
+            'as' => 'message.send',
+            'uses' => 'MessageController@send'
+        ]);
+    });
+});
+
+

@@ -2,9 +2,12 @@
     <div class="page-wrapper">
         <navBar/>
 
-            <userForm/>
+        <userForm
+                v-if="showForm"
+                @sendMessage="sendMessage"
+        />
 
-        <countdown v-if="!showForm" date="2018-06-18 08:15:00"></countdown>
+        <countdown v-if="!showForm" :date="countdown"></countdown>
 
     </div>
 
@@ -17,11 +20,18 @@
     export default ({
         data: () => ({
             showForm: true,
+            countdown: 0
         }),
         components: {
             navBar,
             userForm,
             Countdown
+        },
+        methods: {
+            sendMessage(value) {
+                this.countdown = value.time
+                this.showForm = false
+            }
         }
     })
 </script>

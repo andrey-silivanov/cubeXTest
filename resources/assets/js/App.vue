@@ -13,10 +13,6 @@
         }),
         created() {
             this.windowHeight = `${(window.innerHeight)}px`
-        },
-        mounted() {
-            console.log('asds');
-            console.info('App :', this.$route)
         }
     };
 </script>

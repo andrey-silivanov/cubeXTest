@@ -3,41 +3,39 @@
             vs-align="center" vs-w="4">
         <div class="form-wrapper">
 
-                <vs-card vs-color="rgb(30, 199, 135)">
-                    <vs-card-header vs-background-color="rgb(30, 199, 135)" vs-title="Send message"
-                                     vs-icon="mail_outline"></vs-card-header>
-                    <vs-card-body>
-                        <vs-row>
-                            <vs-input vs-color="success" vs-label-placeholder="Title" v-model="title"/>
-                        </vs-row>
-                        <vs-row>
-                            <quill-editor v-model="body"
-                                          ref="myQuillEditor"
-                                          :options="editorOption"
-                                          @blur="onEditorBlur($event)"
-                                          @focus="onEditorFocus($event)"
-                                          @ready="onEditorReady($event)">
-                            </quill-editor>
-                        </vs-row>
-                        <vs-row>
-                            <div class="centerx">
-                                <vue-base64-file-upload
-                                        class="upload_file_wrapper"
-                                        accept=".xlsx,.xls,image/*,.doc,.docx,.ppt,.pptx,.txt,.pdf"
-                                        image-class="v1-image"
-                                        input-class="upload_file_input"
-                                        :max-size="customImageMaxSize"
-                                        @size-exceeded="onSizeExceeded"
-                                        @load="onLoad" />
-                            </div>
-                        </vs-row>
+            <vs-card vs-color="rgb(30, 199, 135)">
+                <vs-card-header vs-background-color="rgb(30, 199, 135)" vs-title="Send message"
+                                vs-icon="mail_outline"></vs-card-header>
+                <vs-card-body>
+                    <vs-row>
+                        <vs-input vs-color="success" vs-label-placeholder="Title" v-model="title"/>
+                    </vs-row>
+                    <vs-row>
+                        <quill-editor v-model="body"
+                                      ref="myQuillEditor"
+                                      :options="editorOption"
+                        >
+                        </quill-editor>
+                    </vs-row>
+                    <vs-row>
+                        <div class="centerx">
+                            <vue-base64-file-upload
+                                    class="upload_file_wrapper"
+                                    accept=".xlsx,.xls,image/*,.doc,.docx,.ppt,.pptx,.txt,.pdf"
+                                    image-class="v1-image"
+                                    input-class="upload_file_input"
+                                    :max-size="customImageMaxSize"
+                                    @size-exceeded="onSizeExceeded"
+                                    @load="onLoad"/>
+                        </div>
+                    </vs-row>
 
-                    </vs-card-body>
-                    <vs-card-actions>
-                        <vs-button @click="base" class="send-button" vs-color="rgb(40, 40, 40)">SEND</vs-button>
-                    </vs-card-actions>
-                </vs-card>
-            </div>
+                </vs-card-body>
+                <vs-card-actions>
+                    <vs-button @click="send" class="send-button" vs-color="rgb(40, 40, 40)">SEND</vs-button>
+                </vs-card-actions>
+            </vs-card>
+        </div>
 
     </vs-col>
 </template>
@@ -79,30 +77,17 @@
             this.windowHeight = `${(window.innerHeight - 100)}px`
         },
         methods: {
-            base() {
-                var reader = new FileReader();
-                reader.readAsDataURL(this.url);
-                reader.onload = function () {
-                    console.log(reader.result);
-                };
-                reader.onerror = function (error) {
-                    console.log('Error: ', error);
-                };
+            send() {
+                let data = {
+                    title: this.title,
+                    body: this.body,
+                    file: this.url
+                }
+                this.$http.post(`/message/send`, data).then(
+                        response => this.$emit('sendMessage', response.data.data),
+                        error => console.log('error')
+                )
             },
-            onEditorBlur(quill) {
-                console.log('editor blur!', quill)
-            },
-            onEditorFocus(quill) {
-                console.log('editor focus!', quill)
-            },
-            onEditorReady(quill) {
-                console.log('editor ready!', quill)
-            },
-            onEditorChange({quill, html, text}) {
-                console.log('editor change!', quill, html, text)
-                this.content = html
-            },
-
             onLoad(dataUri) {
                 this.url = dataUri; // data-uri string
             },
@@ -122,15 +107,19 @@
     .centerx {
         width: 100%;
     }
+
     .quill-editor {
         margin: 10px;
     }
+
     .ql-container {
-        min-height:100px !important;
+        min-height: 100px !important;
     }
+
     .upload_file_wrapper {
         margin: 10px;
     }
+
     .upload_file_input {
         background: inherit;
         box-shadow: none;
@@ -139,6 +128,7 @@
         padding: 10px;
         border-radius: 5px;
     }
+
     .send-button {
         width: 100%;
         margin: 10px 20px;

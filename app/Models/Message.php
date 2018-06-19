@@ -3,17 +3,18 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\{
-    Builder
+use Spatie\MediaLibrary\HasMedia\{
+    HasMedia,
+    HasMediaTrait
 };
-use App\Models\EloquentModel;
 
 /**
  * Class Message
  * @package App\Models
  */
-class Message extends EloquentModel
+class Message extends EloquentModel implements HasMedia
 {
+    use HasMediaTrait;
     /**
      * @var string
      */
@@ -82,5 +83,8 @@ class Message extends EloquentModel
      * Entity public methods go below
      */
 
-    // @todo:
+    public function getNextMessageDate()
+    {
+        return $this->created_at->format('Y-m-d H:i:s');
+    }
 }
