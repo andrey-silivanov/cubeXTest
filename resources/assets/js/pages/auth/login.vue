@@ -64,7 +64,7 @@
                         this.errors = err.response.data.errors;
                     },
                     rememberMe: true,
-                    redirect: '/home',
+                    redirect: '/user',
                     fetchUser: true,
                 });
             }

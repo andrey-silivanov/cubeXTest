@@ -88,7 +88,7 @@
                      },
                      autoLogin: true,
                      rememberMe: true,
-                     redirect: '/home',
+                     redirect: '/user',
                      fetchUser: true
                 });
             }

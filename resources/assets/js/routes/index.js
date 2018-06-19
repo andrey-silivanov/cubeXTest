@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 import Auth from '../pages/auth'
 import Login from '../pages/auth/login'
 import Register from '../pages/auth/register'
-import Home from '../pages/home'
+import User from '../pages/user'
 import Admin from '../pages/admin'
 import NotFound from '../pages/error/notFoundPage'
 import ForbiddenPage from '../pages/error/forbidden'
@@ -37,9 +37,9 @@ const routes = [
     ]
   },
   {
-    path: '/home',
-    name: 'home',
-    component: Home,
+    path: '/user',
+    name: 'user',
+    component: User,
     meta: {
       auth: {
         roles: 'user',
