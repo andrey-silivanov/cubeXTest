@@ -2,7 +2,9 @@
     <div class="auth-wrapper full-height">
         <vs-row vs-align="center" vs-type="flex" class="full-height">
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                <transition name="page" mode="out-in">
                 <router-view></router-view>
+                </transition>
             </vs-col>
 
             <vs-col vs-type="flex" class="wrapper-right-block" vs-color="dark" vs-justify="center" vs-align="center"
@@ -50,5 +52,13 @@
 
     h3 {
         text-align: center;
+    }
+    .page-enter-active, .page-leave-active {
+        transition: opacity 0.5s, transform 0.6s;
+    }
+    .page-enter, .page-leave-to {
+        opacity: 0;
+        transform: translate(0%);
+        transition: width 0.1s linear 0.09s;
     }
 </style>
