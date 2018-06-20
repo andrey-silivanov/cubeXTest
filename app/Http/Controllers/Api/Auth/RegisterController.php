@@ -30,7 +30,7 @@ class RegisterController extends ApiController
         ]);
 
         $user = $this->createUser($request->only('name', 'email', 'password'));
-        $user->attachRole(Role::where('name', 'user')->first());
+        $user->attachRole(Role::where('name', User::ROLE_USER)->first());
         
         $token = JWTAuth::fromUser($user);
 

@@ -16,6 +16,9 @@ class User extends Authenticatable
     use Notifiable,
         LaratrustUserTrait;
 
+    const ROLE_USER = 'user';
+    const ROLE_MANAGER = 'manager';
+    
     /**
      * @var string
      */

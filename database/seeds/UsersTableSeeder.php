@@ -13,17 +13,17 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $user = factory(User::class)->create([
-            'name' => 'John',
+            'name'  => 'John',
             'email' => 'manager@mail.com',
         ]);
 
-        $user->attachRole(\App\Models\Role::where('name', 'manager')->first());
+        $user->attachRole(\App\Models\Role::where('name', User::ROLE_MANAGER)->first());
 
         $user = factory(User::class)->create([
-            'name' => 'User',
+            'name'  => 'User',
             'email' => 'test@mail.com',
         ]);
 
-        $user->attachRole(\App\Models\Role::where('name', 'user')->first());
+        $user->attachRole(\App\Models\Role::where('name', User::ROLE_USER)->first());
     }
 }
