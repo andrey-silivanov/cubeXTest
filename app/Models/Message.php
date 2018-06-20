@@ -83,8 +83,12 @@ class Message extends EloquentModel implements HasMedia
     /**
      * Entity public methods go below
      */
-
-    public function getNextMessageDate()
+    /**
+     * Return date next message
+     *
+     * @return string
+     */
+    public function getNextMessageDate(): string
     {
         return $this->created_at->timezone($this->timezone)->addDay()->format('Y-m-d H:i:s');
     }

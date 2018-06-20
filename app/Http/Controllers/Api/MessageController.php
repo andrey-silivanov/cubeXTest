@@ -21,7 +21,7 @@ class MessageController extends ApiController
         todo added lang file
         */
         return $this->successResponse(
-            $this->transformDataForResponse(new CountdownResource($message)), trans('message.create'));
+            $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));
     }
 
     /**
