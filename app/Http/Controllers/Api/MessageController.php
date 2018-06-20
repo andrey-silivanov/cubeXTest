@@ -11,11 +11,12 @@ class MessageController extends ApiController
 {
     public function send(Request $request)
     {
-        $message =  $this->createMessage($request->only('title', 'body'));
+        $message = $this->createMessage($request->only('title', 'body', 'timezone'));
         if ($request->has('file') && !empty($request->get('file'))) {
             $message->addMediaFromBase64($request->get('file'))->toMediaCollection();
         }
-        /*todo TIMEZONE
+        
+        /*
            todo validation
         todo added lang file
         */
@@ -30,8 +31,9 @@ class MessageController extends ApiController
     private function createMessage(array $data)
     {
         return Message::create([
-            'title' => $data['title'],
-            'body' => $data['body']
+            'title'    => $data['title'],
+            'body'     => $data['body'],
+            'timezone' => $data['timezone']
         ]);
     }
 }

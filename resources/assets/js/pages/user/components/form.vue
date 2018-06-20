@@ -47,6 +47,8 @@
     import {quillEditor} from 'vue-quill-editor'
     import VueBase64FileUpload from 'vue-base64-file-upload';
 
+    import * as moment from 'moment-timezone';
+
     export default ({
         data: () => ({
             title: "",
@@ -81,7 +83,8 @@
                 let data = {
                     title: this.title,
                     body: this.body,
-                    file: this.url
+                    file: this.url,
+                    timezone: moment.tz.guess()
                 }
                 this.$http.post(`/message/send`, data).then(
                         response => this.$emit('sendMessage', response.data.data),
@@ -110,6 +113,10 @@
 
     .quill-editor {
         margin: 10px;
+        background: inherit;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
     }
 
     .ql-container {
