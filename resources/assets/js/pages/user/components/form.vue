@@ -94,8 +94,7 @@
                     }
                 }
             },
-            colorAlert:'primary',
-            activeAlert:false,
+            activeAlert: false,
             windowHeight: 0
         }),
         components: {

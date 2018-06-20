@@ -36,7 +36,12 @@
                 </router-link>
             </vs-col>
         </vs-row>
-
+        <vs-dialog
+                vs-color="danger"
+                vs-title="Error"
+                :vs-active.sync="activeAlert">
+            Server error
+        </vs-dialog>
     </div>
 </template>
 <script type="text/babel">
@@ -49,7 +54,8 @@
                 email: false,
                 password: false
             },
-            errors: {}
+            errors: {},
+            activeAlert: false,
         }),
         methods: {
             login() {
@@ -59,14 +65,30 @@
                         email: this.email,
                         password: this.password
                     },
-                    success () {},
+                    success () {
+                        this.$vs.notify({
+                            time: 1500,
+                            title:'Success',
+                            text: 'Welcome',
+                            color: 'success'
+                        });
+                        let redirectPath = 'user';
+                        if (this.$auth.check('admin')) redirectPath = 'admin';
+                        setTimeout(() => this.$router.push(redirectPath), 1500); /// redirect
+                    },
                     error(err) {
-                        this.errors = err.response.data.errors;
+                        if (err.response.data.code == 422) {
+                            this.errors = err.response.data.errors;
+                        } else {
+                            this.openAlert()
+                        }
                     },
                     rememberMe: true,
-                    redirect: '/user',
                     fetchUser: true,
                 });
+            },
+            openAlert(){
+                this.activeAlert = true;
             }
         }
     })
