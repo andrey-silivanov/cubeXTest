@@ -1,5 +1,5 @@
 <template>
-    <div class="countdown">
+    <div class="countdown" :style="{height: windowHeight}">
 
         <!--<div class="block">
             <p class="digit">{{ days | twoDigits }}</p>
@@ -21,20 +21,22 @@
 </template>
 <script type="text/babel">
     export default ({
-        mounted() {
-            window.setInterval(() => {
-                this.now = Math.trunc((new Date()).getTime() / 1000);
-            },1000);
-        },
+        data: () => ({
+            windowHeight: 0,
+            now: Math.trunc((new Date()).getTime() / 1000)
+        }),
         props: {
             date: {
                 type: String
             }
         },
-        data() {
-            return {
-                now: Math.trunc((new Date()).getTime() / 1000)
-            }
+        created() {
+            this.windowHeight = `${(window.innerHeight - 100)}px`
+        },
+        mounted() {
+            window.setInterval(() => {
+                this.now = Math.trunc((new Date()).getTime() / 1000);
+            },1000);
         },
         computed: {
             dateInMilliseconds() {

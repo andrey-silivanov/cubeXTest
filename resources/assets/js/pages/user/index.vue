@@ -1,14 +1,14 @@
 <template>
     <div class="page-wrapper">
         <navBar/>
-
+        <transition name="page" mode="out-in">
         <userForm
                 v-if="showForm"
                 @sendMessage="sendMessage"
         />
 
         <countdown v-if="!showForm" :date="countdown"></countdown>
-
+        </transition>
     </div>
 
 </template>
@@ -35,3 +35,13 @@
         }
     })
 </script>
+<style scoped>
+    .page-enter-active, .page-leave-active {
+        transition: opacity 0.5s, transform 0.6s;
+    }
+    .page-enter, .page-leave-to {
+        opacity: 0;
+        transform: translate(0%);
+        transition: width 0.1s linear 0.09s;
+    }
+</style>
