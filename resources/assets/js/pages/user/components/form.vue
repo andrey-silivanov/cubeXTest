@@ -8,7 +8,15 @@
                                 vs-icon="mail_outline"></vs-card-header>
                 <vs-card-body>
                     <vs-row>
-                        <vs-input vs-color="success" vs-label-placeholder="Title" v-model="title"/>
+                        <vs-input
+                                  :vs-valid.sync="validos.title"
+                                  vs-success-text="Correo Valido"
+                                  vs-danger-text="The title does not meet the requirements"
+                                  :vs-validation-function="(value) => value.length > 3"
+                                  vs-type="text" vs-label-placeholder="Title" v-model="title"/>
+                        <vs-alert vs-active="true" class="form-alert" vs-color="danger" v-if="errors.title">
+                            <span v-for="error in errors.title[0]"> {{ error }}</span>
+                        </vs-alert>
                     </vs-row>
                     <vs-row>
                         <quill-editor v-model="body"
@@ -16,17 +24,25 @@
                                       :options="editorOption"
                         >
                         </quill-editor>
+                        <vs-alert vs-active="true" class="form-alert" vs-color="danger" v-if="errors.body">
+                            <span v-for="error in errors.body[0]"> {{ error }}</span>
+                        </vs-alert>
                     </vs-row>
                     <vs-row>
                         <div class="centerx">
                             <vue-base64-file-upload
                                     class="upload_file_wrapper"
+                                    placeholder="Click here to upload file"
                                     accept=".xlsx,.xls,image/*,.doc,.docx,.ppt,.pptx,.txt,.pdf"
                                     image-class="v1-image"
+                                    :disable-preview="true"
                                     input-class="upload_file_input"
                                     :max-size="customImageMaxSize"
                                     @size-exceeded="onSizeExceeded"
                                     @load="onLoad"/>
+                            <vs-alert vs-active="true" class="form-alert" vs-color="danger" v-if="errors.file">
+                                <span v-for="error in errors.file[0]"> {{ error }}</span>
+                            </vs-alert>
                         </div>
                     </vs-row>
 
@@ -36,7 +52,12 @@
                 </vs-card-actions>
             </vs-card>
         </div>
-
+        <vs-dialog
+                vs-color="danger"
+                vs-title="Error"
+                :vs-active.sync="activeAlert">
+                Server error
+        </vs-dialog>
     </vs-col>
 </template>
 <script type="text/babel">
@@ -53,8 +74,12 @@
         data: () => ({
             title: "",
             body: "",
-            url: "",
+            url: null,
             customImageMaxSize: 3,
+            validos: {
+              title: false
+            },
+            errors: {},
             editorOption: {
                 modules: {
                     toolbar: [
@@ -69,6 +94,8 @@
                     }
                 }
             },
+            colorAlert:'primary',
+            activeAlert:false,
             windowHeight: 0
         }),
         components: {
@@ -80,15 +107,23 @@
         },
         methods: {
             send() {
+                this.errors = {}
                 let data = {
                     title: this.title,
                     body: this.body,
-                    file: this.url,
                     timezone: moment.tz.guess()
                 }
+
+                if(this.url) data.file = this.url;
                 this.$http.post(`/message/send`, data).then(
                         response => this.$emit('sendMessage', response.data.data),
-                        error => console.log('error')
+                        error => {
+                            if (error.response.data.code == 422) {
+                                this.errors = error.response.data.errors;
+                            } else {
+                                this.openAlert()
+                            }
+                        }
                 )
             },
             onLoad(dataUri) {
@@ -97,6 +132,9 @@
 
             onSizeExceeded(size) {
                 alert(`Image ${size}Mb size exceeds limits of ${this.customImageMaxSize}Mb!`);
+            },
+            openAlert(){
+                this.activeAlert = true;
             }
         },
         computed: {
@@ -139,5 +177,9 @@
     .send-button {
         width: 100%;
         margin: 10px 20px;
+    }
+    .form-alert {
+        margin: 10px;
+        width: auto!important;
     }
 </style>

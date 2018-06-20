@@ -3,23 +3,19 @@ declare (strict_types = 1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\CountdownResource;
 use App\Models\Message;
-use Illuminate\Http\Request;
 
 class MessageController extends ApiController
 {
-    public function send(Request $request)
+    public function send(CreateMessageRequest $request)
     {
         $message = $this->createMessage($request->only('title', 'body', 'timezone'));
         if ($request->has('file') && !empty($request->get('file'))) {
             $message->addMediaFromBase64($request->get('file'))->toMediaCollection();
         }
         
-        /*
-           todo validation
-        todo added lang file
-        */
         return $this->successResponse(
             $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));
     }
