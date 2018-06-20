@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@websanova/vue-auth": "^2.21.11-beta",
+        "moment-timezone": "^0.5.20",
         "vue-axios": "^2.1.1",
         "vue-base64-file-upload": "^1.0.4",
         "vue-quill-editor": "^3.0.6",
