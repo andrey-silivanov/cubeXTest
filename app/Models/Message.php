@@ -28,7 +28,8 @@ class Message extends EloquentModel implements HasMedia
         'title',
         'body',
         'new',
-        'answered'
+        'answered',
+        'timezone'
     ];
 
     /**
