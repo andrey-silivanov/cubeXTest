@@ -7,19 +7,20 @@ use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\CountdownResource;
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\ManagerNotification;
 
 class MessageController extends ApiController
 {
     public function send(CreateMessageRequest $request)
     {
-        return $this->getManager();
+        //return $this->getManager();
         $message = $this->createMessage($request->only('title', 'body', 'timezone'));
         if ($request->has('file') && !empty($request->get('file'))) {
             $message->addMediaFromBase64($request->get('file'))->toMediaCollection();
         }
-        
-        return $this->successResponse(
-            $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));
+        return $this->notify($message);
+      /*  return $this->successResponse(
+            $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));*/
     }
 
     /**
@@ -40,5 +41,11 @@ class MessageController extends ApiController
         return User::whereHas('roles', function($q) {
             return $q->where('name', User::ROLE_MANAGER);
         })->first();
+    }
+
+    private function notify(Message $message)
+    {
+        $manager = $this->getManager();
+        $manager->notify(new ManagerNotification($message));
     }
 }

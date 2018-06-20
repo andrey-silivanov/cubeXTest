@@ -44,7 +44,7 @@ class JwtTokenMiddleware
         $token = $request->bearerToken();
 
         if (!$token) {
-            throw new JWTException('tymon.jwt.absent');
+            throw new JwtAuthFailedException('tymon.jwt.absent');
         }
         try {
             $user = $this->auth->authenticate($token);
