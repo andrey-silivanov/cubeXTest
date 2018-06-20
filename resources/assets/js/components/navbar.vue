@@ -8,7 +8,7 @@
             </vs-button>
         </a>
         <router-link :to="{name: 'admin'}" class="nav-link" active-class="active"> Admin  </router-link>
-        <router-link :to="{name: 'home'}" class="nav-link" active-class="active"> Home </router-link>
+        <router-link :to="{name: 'user'}" class="nav-link" active-class="active"> Home </router-link>
     </vs-topbar>
 </template>
 <script type="text/babel">

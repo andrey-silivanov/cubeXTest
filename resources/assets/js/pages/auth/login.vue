@@ -55,7 +55,7 @@
                 password: false
             },
             errors: {},
-            activeAlert: false,
+            activeAlert: false
         }),
         methods: {
             login() {
@@ -84,7 +84,7 @@
                         }
                     },
                     rememberMe: true,
-                    fetchUser: true,
+                    fetchUser: true
                 });
             },
             openAlert(){

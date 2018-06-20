@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class RegisterController extends ApiController
         ]);
 
         $user = $this->createUser($request->only('name', 'email', 'password'));
+        $user->attachRole(Role::where('name', 'user')->first());
+        
         $token = JWTAuth::fromUser($user);
 
         return $this->successResponse(

@@ -176,6 +176,7 @@
     }
 
     .upload_file_input {
+        width: 100%;
         background: inherit;
         box-shadow: none;
         border: 1px solid rgba(0, 0, 0, 0.15);

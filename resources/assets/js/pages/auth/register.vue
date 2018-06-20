@@ -52,10 +52,12 @@
                 </vs-col>
             </vs-row>
 
-        <!-- <div class="action-block">
-
-
-         </div>-->
+        <vs-dialog
+                vs-color="danger"
+                vs-title="Error"
+                :vs-active.sync="activeAlert">
+            Server error
+        </vs-dialog>
     </div>
 </template>
 <script type="text/babel">
@@ -72,6 +74,7 @@
                 password_confirmation: false
             },
             errors: {},
+            activeAlert: false
         }),
         methods: {
             register() {
@@ -82,15 +85,29 @@
                         password: this.password,
                         password_confirmation: this.password_confirmation
                     },
-                     success () {},
+                     success () {
+                         this.$vs.notify({
+                             time: 1500,
+                             title:'Success',
+                             text: 'Account created',
+                             color: 'success'
+                         });
+                     },
                      error(err) {
-                         this.errors = err.response.data.errors;
+                         if (err.response.data.code == 422) {
+                             this.errors = err.response.data.errors;
+                         } else {
+                             this.openAlert()
+                         }
                      },
                      autoLogin: true,
                      rememberMe: true,
-                     redirect: '/user',
-                     fetchUser: true
+                     fetchUser: true,
+                     redirect: 'user'
                 });
+            },
+            openAlert(){
+                this.activeAlert = true;
             }
         }
     })
