@@ -39,6 +39,7 @@
                                     input-class="upload_file_input"
                                     :max-size="customImageMaxSize"
                                     @size-exceeded="onSizeExceeded"
+                                    @file="onFile"
                                     @load="onLoad"/>
                             <vs-alert vs-active="true" class="form-alert" vs-color="danger" v-if="errors.file">
                                 <span v-for="error in errors.file[0]"> {{ error }}</span>
@@ -75,6 +76,7 @@
             title: "",
             body: "",
             url: null,
+            extensionFile: "",
             customImageMaxSize: 3,
             validos: {
               title: false
@@ -113,7 +115,10 @@
                     timezone: moment.tz.guess()
                 }
 
-                if(this.url) data.file = this.url;
+                if(this.url) {
+                    data.file = this.url;
+                    data.extensionFile = this.extensionFile
+                }
                 this.$http.post(`/message/send`, data).then(
                         response => {
                             this.$vs.notify({
@@ -139,7 +144,9 @@
             onLoad(dataUri) {
                 this.url = dataUri; // data-uri string
             },
-
+            onFile(file) {
+                this.extensionFile = file.name.split('.').pop()
+            },
             onSizeExceeded(size) {
                 alert(`Image ${size}Mb size exceeds limits of ${this.customImageMaxSize}Mb!`);
             },

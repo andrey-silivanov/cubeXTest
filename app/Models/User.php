@@ -3,7 +3,12 @@ declare(strict_types = 1);
 
 namespace App\Models;
 
-use Laratrust\Traits\LaratrustUserTrait,
+use Illuminate\Database\Eloquent\{
+    Builder,
+    Relations\HasMany
+};
+use Illuminate\Support\Collection,
+    Laratrust\Traits\LaratrustUserTrait,
     Illuminate\Notifications\Notifiable,
     Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -67,14 +72,31 @@ class User extends Authenticatable
     /**
      * Entity relations go below
      */
-
-    // @todo:
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 
     /**
      * Entity scopes go below
      */
 
-    // @todo:
+    /**
+     * @param $query
+     * @param $roleName
+     * @return Builder
+     */
+    public function scopeGetUserByRoleName($query, $roleName): Builder
+    {
+        return $query->whereHas('roles', function($q) use ($roleName) {
+            return $q->where('name', $roleName);
+        });
+    }
+
 
     /**
      * Entity mutators and accessors go below
@@ -93,5 +115,14 @@ class User extends Authenticatable
     public function getRole() :string
     {
         return $this->roles()->first()->name;
+    }
+
+    /**
+     * Return all user with role manager
+     * @return Collection
+     */
+    public static function getManagers(): Collection
+    {
+        return self::getUserByRoleName(User::ROLE_MANAGER)->get();
     }
 }

@@ -17,9 +17,12 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
+            $table->unsignedInteger('user_id');
             $table->boolean('new')->default(true);
             $table->boolean('answered')->default(false);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

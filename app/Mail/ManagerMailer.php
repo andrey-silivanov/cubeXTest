@@ -4,24 +4,32 @@ declare (strict_types = 1);
 namespace App\Mail;
 
 use App\Models\Message;
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\{
+    Bus\Queueable,
+    Mail\Mailable,
+    Queue\SerializesModels
+};
 
+/**
+ * Class ManagerMailer
+ * @package App\Mail
+ */
 class ManagerMailer extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $message;
     /**
-     * Create a new message instance.
-     *
-     * @return void
+     * @var Message
+     */
+    public $userMessage;
+
+    /**
+     * ManagerMailer constructor.
+     * @param Message $message
      */
     public function __construct(Message $message)
     {
-        $this->message = $message;
+        $this->userMessage = $message;
     }
 
     /**
