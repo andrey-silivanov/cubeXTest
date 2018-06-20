@@ -116,7 +116,18 @@
 
                 if(this.url) data.file = this.url;
                 this.$http.post(`/message/send`, data).then(
-                        response => this.$emit('sendMessage', response.data.data),
+                        response => {
+                            this.$vs.notify({
+                                time: 1500,
+                                title:'Success',
+                                text: response.data.message,
+                                color: 'success'
+                            });
+                            setTimeout(() => {
+                                this.$emit('sendMessage', response.data.data)
+                            }, 1500);
+
+                        },
                         error => {
                             if (error.response.data.code == 422) {
                                 this.errors = error.response.data.errors;
@@ -141,7 +152,7 @@
             editor() {
                 return this.$refs.myQuillEditor.quill
             }
-        },
+        }
     })
 </script>
 <style>
