@@ -10,6 +10,7 @@ use App\Http\Requests\CreateMessageRequest,
     Illuminate\Http\JsonResponse,
     Illuminate\Database\Eloquent\Model;
 
+use App\Http\Resources\MessageResource;
 use App\Models\{
     Message,
     User
@@ -21,6 +22,25 @@ use App\Models\{
  */
 class MessageController extends ApiController
 {
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+
+       /* return $this->successResponse(
+            $this->transformDataForResponse(new MessageResource(Message::first())), trans('message.all')
+        );*/
+
+       /* return $this->successResponse(
+            $this->transformDataForResponse(MessageResource::collection(Message::limit(1)->get())), trans('message.all')
+        );*/
+
+        return $this->successResponse(
+            $this->transformDataForResponse(MessageResource::collection(Message::paginate(10))), trans('message.all')
+        );
+    }
+    
     /**
      * @param CreateMessageRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -36,6 +56,28 @@ class MessageController extends ApiController
 
         return $this->successResponse(
             $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));
+    }
+
+    public function show(Message $message)
+    {
+        $message->update([
+           'new' => false 
+        ]);
+        
+        return $this->successResponse(
+            $this->transformDataForResponse(new MessageResource($message), 'Get message')
+        );
+    }
+    
+    public function answer(Message $message)
+    {
+        $message->update([
+           'answer' => true 
+        ]);
+
+        return $this->successResponse(
+            $this->transformDataForResponse(new MessageResource($message), 'Update message')
+        );
     }
 
     /**

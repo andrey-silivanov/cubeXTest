@@ -8,6 +8,7 @@ import Login from '../pages/auth/login'
 import Register from '../pages/auth/register'
 import User from '../pages/user'
 import Admin from '../pages/admin'
+import oneMessage from '../pages/admin/one-message'
 import NotFound from '../pages/error/notFoundPage'
 import ForbiddenPage from '../pages/error/forbidden'
 
@@ -55,6 +56,11 @@ const routes = [
     meta: {
       auth: true
     }
+  },
+  {
+    path: '/message/:id',
+    name: 'oneMessage',
+    component: oneMessage
   },
   {
     path: '/403',

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="message-table">
     <vs-row class="table-header">
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
             #ID
@@ -23,42 +23,52 @@
             Time
         </vs-col>
     </vs-row>
-        <vs-row :key="index" v-for="(item, index) in items">
+        <vs-row :key="index" v-for="(message, index) in messages" class="message" :class="{'new': message.new}">
+            <div  @click="oneMessage(message.id)">
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
-                1
+                {{ message.id }}
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-                Test
+                {{ message.title }}
+            </vs-col>
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" v-html="message.body">
+
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-                Descriptionasdasd asd asd asd as dasd as da d dasd sad asdasd ad asd   as ddasdasdasdasdasd
+                {{ message.name }}
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-                John
-            </vs-col>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-                Email@ma.com
+                {{ message.email }}
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
                 true
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-                121.0.222
+                {{ message.date }}
             </vs-col>
+            </div>
         </vs-row>
     </div>
 </template>
 <script type="text/babel">
     export default ({
         data: () => ({
-            items: [
-                    1, 2, 2,
-            ]
-        })
+        }),
+        props: {
+            messages: Array
+        },
+        methods: {
+            oneMessage(id) {
+                this.$router.push(`message/${id}`)
+            }
+        }
     })
 </script>
 
 <style scoped>
+    .message-table {
+        display: block;
+    }
     .table-header {
         padding-bottom: 10px;
         font-weight: 500;
@@ -66,5 +76,12 @@
     }
     .vs-row {
         margin: 15px 0;
+    }
+    .message {
+        padding: 10px;
+        cursor: pointer;
+    }
+    .new {
+        background: #e1e1e1;
     }
 </style>

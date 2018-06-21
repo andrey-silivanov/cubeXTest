@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'send' => 'Message send'
+    'send' => 'Message send',
+    'all'  => 'All messages'
 ];

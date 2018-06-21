@@ -48,14 +48,32 @@ Route::group([
 
 /****** Message *****/
 Route::group([
-    'middleware' => 'auth.jwt'
+    'middleware' => 'auth.jwt',
+    'as'         => 'message'
 ], function () {
     Route::group([
         'middleware' => ['role:user'],
     ], function () {
         Route::post('message/send', [
-            'as' => 'message.send',
+            'as'   => '.send',
             'uses' => 'MessageController@send'
+        ]);
+    });
+
+    Route::group([
+        'middleware' => ['role:user'],  ////@TODO !!!!!!!!!!!!!!!!! change
+    ], function () {
+        Route::get('/message/all', [
+            'as'   => '.all',
+            'uses' => 'MessageController@index'
+        ]);
+        Route::put('/message/answer/{message}', [
+            'as'   => '.answer',
+            'uses' => 'MessageController@answer'
+        ]);
+        Route::get('/message/{message}', [
+            'as'   => '.show',
+            'uses' => 'MessageController@show'
         ]);
     });
 });

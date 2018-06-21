@@ -5,8 +5,10 @@ namespace App\Exceptions;
 
 use App\Http\Controllers\Traits\JsonResponseTrait;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -52,6 +54,12 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ValidationException && $request->expectsJson()) {
             return $this->invalidResponse($exception->errors(), $exception->getMessage());
+        }
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->notFoundResponse($exception->getMessage());
+        }
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->notFoundResponse($exception->getMessage());
         }
         
         return parent::render($request, $exception);

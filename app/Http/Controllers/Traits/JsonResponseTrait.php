@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\Traits;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\JsonResponse,
     Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,9 +22,18 @@ trait JsonResponseTrait
      */
     public function transformDataForResponse(JsonResource $resource, $data = [], $key = null): array
     {
-        if(is_null($resource->resource)) return [];
+        if (is_null($resource->resource)) return [];
+        $resourceData = $resource->response()->getData();
+        //dd(collect($resource->response()->getData()->data)->flatten()->toArray());
+        //if ($resource->resource instanceof Model) return $data = collect($resourceData->data)->toArray();
+        
+        $data = collect($resourceData->data)->toArray();
 
-        return collect($resource->response()->getData())->flatten()->toArray();
+        if ($resource->resource instanceof LengthAwarePaginator) {
+            $data['paginate'] = $this->transformPagination($resourceData);
+        }
+
+        return $data;
     }
 
     /**
@@ -36,7 +46,6 @@ trait JsonResponseTrait
      */
     public function entityCreatedResponse($data = [], $message = null, array $headers = [], $options = 0): JsonResponse
     {
-        // 200, not 201!
         return $this->apiResponse(200, $data, $message, $headers, $options);
     }
 
@@ -144,6 +153,7 @@ trait JsonResponseTrait
         int $options = 0
     ): JsonResponse
     {
+        //dd($data);
         // Set code
         $respData['code'] = $code;
 
@@ -160,7 +170,7 @@ trait JsonResponseTrait
                     unset($data['paginate']);
                     $respData['paginate'] = $paginate;
                 }
-                $respData['data'] = (count($data) == 1) ? $data[0] : $data;
+                $respData['data'] = $data; (count($data) == 1 && isset($respData['paginate'])) ? $data[0] : $data;
                 break;
 
             case 422:
@@ -175,5 +185,19 @@ trait JsonResponseTrait
         }
 
         return response()->json($respData, $code, $headers, $options);
+    }
+
+    /**
+     * Return pagination array
+     *
+     * @param $resource
+     * @return array
+     */
+    private function transformPagination($resource):array
+    {
+        return [
+            'meta'  => collect($resource->meta)->toArray(),
+            'links' => collect($resource->links)->toArray()
+        ];
     }
 }
