@@ -8,9 +8,8 @@ use App\Http\Requests\CreateMessageRequest,
     App\Notifications\ManagerNotification,
     Illuminate\Support\Facades\Auth,
     Illuminate\Http\JsonResponse,
-    Illuminate\Database\Eloquent\Model;
-
-use App\Http\Resources\MessageResource;
+    Illuminate\Database\Eloquent\Model,
+    App\Http\Resources\MessageResource;
 use App\Models\{
     Message,
     User
@@ -27,20 +26,11 @@ class MessageController extends ApiController
      */
     public function index(): JsonResponse
     {
-
-       /* return $this->successResponse(
-            $this->transformDataForResponse(new MessageResource(Message::first())), trans('message.all')
-        );*/
-
-       /* return $this->successResponse(
-            $this->transformDataForResponse(MessageResource::collection(Message::limit(1)->get())), trans('message.all')
-        );*/
-
         return $this->successResponse(
-            $this->transformDataForResponse(MessageResource::collection(Message::paginate(10))), trans('message.all')
+            $this->transformDataForResponse(MessageResource::collection(Message::orderByDesc('id')->paginate(10))), trans('message.all')
         );
     }
-    
+
     /**
      * @param CreateMessageRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -51,28 +41,36 @@ class MessageController extends ApiController
         if ($request->has('file') && !empty($request->get('file'))) {
             $message->saveFile($request->get('file'), $request->get('extensionFile'));
         }
-       
+
         $this->notify($message);
 
         return $this->successResponse(
             $this->transformDataForResponse(new CountdownResource($message)), trans('message.send'));
     }
 
-    public function show(Message $message)
+    /**
+     * @param Message $message
+     * @return JsonResponse
+     */
+    public function show(Message $message): JsonResponse
     {
         $message->update([
-           'new' => false 
+            'new' => false
         ]);
-        
+
         return $this->successResponse(
             $this->transformDataForResponse(new MessageResource($message), 'Get message')
         );
     }
-    
-    public function answer(Message $message)
+
+    /**
+     * @param Message $message
+     * @return JsonResponse
+     */
+    public function answer(Message $message): JsonResponse
     {
         $message->update([
-           'answer' => true 
+            'answered' => true
         ]);
 
         return $this->successResponse(

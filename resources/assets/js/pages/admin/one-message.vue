@@ -21,15 +21,16 @@
                     <p class="body-message" v-html="message.body"></p>
                     <span class="pull-right">{{ message.date }}</span>
 
-                    <div >
-                        <a :href="message.link">
+                    <div v-if="message.file">
+                        <a :href="message.file" download>
                             <vs-button vs-color="warning" vs-type="filled" vs-icon="backup">Download</vs-button>
                         </a>
                     </div>
 
                 </vs-card-body>
                 <vs-card-actions>
-                    <vs-button @click="answer" v-if="" class="send-button" vs-color="rgb(40, 40, 40)">Answer</vs-button>
+                    <vs-button @click="answer" v-if="!message.answered" class="send-button" vs-color="rgb(40, 40, 40)">Answer</vs-button>
+                    <div v-else class="answered-block">Completed</div>
                 </vs-card-actions>
             </vs-card>
         </vs-col>
@@ -63,6 +64,12 @@
             answer() {
                 this.$http.put(`/message/answer/${this.$route.params.id}`).then(
                         response => {
+                            this.$vs.notify({
+                                time: 1500,
+                                title:'Success',
+                                text: 'Completed',
+                                color: 'success'
+                            });
                             this.message = response.data.data
                         },
                         error => {
@@ -84,6 +91,19 @@
     }
     .send-button {
         width: 100%;
+        margin-top: 30px;
+    }
+    .con-vs-card-actions {
+        width: 100%;
+        font-size: 15px;
+    }
+    .answered-block {
+        width: 100%;
+        background: #2EC589;
+        text-align: center;
+        padding: 9px;
+        color: #ffffff;
+        border-radius: 5px;
         margin-top: 30px;
     }
 </style>

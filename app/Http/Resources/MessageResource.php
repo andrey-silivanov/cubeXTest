@@ -13,17 +13,18 @@ class MessageResource extends JsonResource
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request): array 
+    public function toArray($request): array
     {
         return [
-            'id'    => $this->id,
-            'title' => $this->title,
-            'body'  => $this->body,
-            'name'  => $this->users->name,
-            'email' => $this->users->email,
-            'file'  => true,
-            'new'  => $this->new,
-            'date'  => $this->created_at->format('Y-m-d')
+            'id'       => $this->id,
+            'title'    => $this->title,
+            'body'     => $this->body,
+            'name'     => $this->users->name,
+            'email'    => $this->users->email,
+            'file'     => ($this->hasFile()) ? $this->pathFile : "",
+            'new'      => $this->new,
+            'answered' => $this->answered,
+            'date'     => $this->created_at->format('Y-m-d')
         ];
     }
 }

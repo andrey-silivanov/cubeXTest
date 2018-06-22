@@ -41,7 +41,12 @@
                 {{ message.email }}
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
-                true
+                <div v-if="message.file">
+                    <a :href="message.file" download>
+                        <vs-button vs-color="warning" vs-type="filled" vs-icon="backup">Download</vs-button>
+                    </a>
+                </div>
+                <div v-else> - </div>
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
                 {{ message.date }}
