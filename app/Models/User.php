@@ -4,8 +4,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\{
-    Builder,
-    Relations\HasMany
+    Builder, Model, Relations\HasMany
 };
 use Illuminate\Support\Collection,
     Laratrust\Traits\LaratrustUserTrait,
@@ -124,5 +123,13 @@ class User extends Authenticatable
     public static function getManagers(): Collection
     {
         return self::getUserByRoleName(User::ROLE_MANAGER)->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|null|object|static
+     */
+    public function getLastMessage(): ?Model
+    {
+        return $this->messages()->orderByDesc('id')->first();
     }
 }

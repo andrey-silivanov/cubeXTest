@@ -1,13 +1,13 @@
 <template>
-    <div class="page-wrapper">
+    <div class="page-wrapper" v-if="ready">
         <navBar/>
         <transition name="page" mode="out-in">
-        <userForm
-                v-if="showForm"
-                @sendMessage="sendMessage"
-        />
+            <userForm
+                    v-if="showForm"
+                    @sendMessage="sendMessage"
+            />
 
-        <countdown v-if="!showForm" :date="countdown"></countdown>
+            <countdown v-if="!showForm" :date="countdown"></countdown>
         </transition>
     </div>
 
@@ -19,18 +19,42 @@
     import navBar from './../../components/navbar'
     export default ({
         data: () => ({
+            ready: false,
             showForm: true,
-            countdown: 0
+            countdown: 0,
+            colorLoading: '#2EC589',
+            backgroundLoading: '#424242'
         }),
         components: {
             navBar,
             userForm,
             Countdown
         },
+        created() {
+            this.$vs.loading({
+                background:this.backgroundLoading,
+                color: this.colorLoading
+            });
+            this.checkMessage()
+        },
         methods: {
             sendMessage(value) {
                 this.countdown = value.time
                 this.showForm = false
+            },
+            checkMessage() {
+                this.$http.get('/message/check').then(
+                        response => {
+                            this.countdown = response.data.data.time;
+                            if (this.countdown) this.showForm = false;
+                            setTimeout( ()=> {
+                                this.$vs.loading.close()
+                                this.ready = true
+                            }, 1000);
+                        },
+                        error => {
+                        }
+                )
             }
         }
     })
@@ -39,6 +63,7 @@
     .page-enter-active, .page-leave-active {
         transition: opacity 0.5s, transform 0.6s;
     }
+
     .page-enter, .page-leave-to {
         opacity: 0;
         transform: translate(0%);

@@ -54,6 +54,10 @@ Route::group([
     Route::group([
         'middleware' => ['role:user'],
     ], function () {
+        Route::get('/message/check', [
+            'as'   => '.check',
+            'uses' => 'MessageController@check'
+        ]);
         Route::post('message/send', [
             'as'   => '.send',
             'uses' => 'MessageController@send'

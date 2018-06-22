@@ -14,6 +14,7 @@ use App\Models\{
     Message,
     User
 };
+use Carbon\Carbon;
 
 /**
  * Class MessageController
@@ -29,6 +30,20 @@ class MessageController extends ApiController
         return $this->successResponse(
             $this->transformDataForResponse(MessageResource::collection(Message::orderByDesc('id')->paginate(10))), trans('message.all')
         );
+    }
+    
+    public function check()
+    {
+        $user = Auth::user();
+        $message = $user->getLastMessage();
+      // dd(Carbon::now()->diffInHours($message->created_at, false));
+        if (Carbon::now()->diffInHours($message->created_at, false) >= 0) {
+            return $this->successResponse(
+                $this->transformDataForResponse(new CountdownResource($message)), trans('message.check'));
+        } else {
+            return $this->successResponse(
+                ['time' => false], trans('message.check'));
+        }
     }
 
     /**

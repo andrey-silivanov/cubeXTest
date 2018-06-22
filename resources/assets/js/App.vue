@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <main :style="{height: windowHeight}">
+        <main :style="{height: windowHeight}" v-cloak>
             <transition name="page" mode="out-in">
             <router-view></router-view>
                 </transition>
@@ -19,6 +19,9 @@
     };
 </script>
 <style>
+    [v-cloak] {
+        display: none;
+    }
     #topBar {
         height: 50px;
     }

@@ -2,5 +2,6 @@
 
 return [
     'send' => 'Message send',
-    'all'  => 'All messages'
+    'all'  => 'All messages',
+    'check'  => 'Message check'
 ];
