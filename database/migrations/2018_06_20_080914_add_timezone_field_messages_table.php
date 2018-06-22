@@ -14,7 +14,7 @@ class AddTimezoneFieldMessagesTable extends Migration
     public function up()
     {
         Schema::table('messages', function($table) {
-            $table->string('timezone');
+            $table->string('timezone')->nullable();
         });
     }
 

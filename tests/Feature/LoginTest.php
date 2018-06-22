@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace Tests\Feature;
 
+use App\Models\Role;
 use App\Models\User,
     Illuminate\Foundation\Testing\RefreshDatabase,
     Tests\TestCase,
@@ -19,10 +20,15 @@ class LoginTest extends TestCase
      * @var User
      */
     protected $user;
-    protected function setUp(){parent::setUp();
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->seed(\LaratrustSeeder::class);
         $this->user = factory(User::class)->create([
             'password' => bcrypt('123456'),
         ]);
+        $this->user = $this->user->attachRole(Role::where('name', User::ROLE_USER)->first());
     }
 
     /**
@@ -36,10 +42,27 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertSuccessful();
-        $this->assertEquals($this->user->name, $response->json('result.name'));
-        $this->assertEquals($this->user->id, $response->json('result.id'));
-        $this->assertEquals($this->user->email, $response->json('result.email'));
-        $response->assertHeader('access_token');
+        $response->assertHeader('authorization');
+    }
+
+    /**
+     * @test
+     */
+    public function getUser()
+    {
+        $responseAuth = $this->postJson(route('login'), [
+            'email' => $this->user->email,
+            'password' => '123456',
+        ]);
+
+        $token = "Bearer " . $responseAuth->headers->get('authorization');
+        $response = $this->getJson(route('getUser'), ['Authorization' => $token]);
+
+        $response->assertSuccessful();
+        $this->assertEquals($this->user->name, $response->json('data.name'));
+        $this->assertEquals($this->user->id, $response->json('data.id'));
+        $this->assertEquals($this->user->email, $response->json('data.email'));
+        $this->assertEquals($this->user->getRole(), $response->json('data.role'));
     }
 
     /**
