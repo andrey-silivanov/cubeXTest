@@ -3,11 +3,11 @@ declare (strict_types = 1);
 
 namespace Tests\Feature;
 
-use App\Models\Role;
-use App\Models\User,
-    Illuminate\Foundation\Testing\RefreshDatabase,
-    Tests\TestCase,
-    Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\{
+    Role, User
+};
+use Illuminate\Foundation\Testing\RefreshDatabase,
+    Tests\TestCase;
 
 /**
  * Class LoginTest

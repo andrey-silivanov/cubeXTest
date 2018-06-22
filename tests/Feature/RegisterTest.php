@@ -15,6 +15,13 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->seed(\LaratrustSeeder::class);
+    }
+
+
     /**
      * Register user
      * @test
@@ -34,12 +41,12 @@ class RegisterTest extends TestCase
 
         $user = User::whereEmail($email)->first();
         $this->assertNotNull($user);
-        $this->assertEquals($name, $response->json('result.name'));
-        $this->assertEquals($user->id, $response->json('result.id'));
-        $this->assertEquals($email, $response->json('result.email'));
+        $this->assertEquals($name, $response->json('data.name'));
+        $this->assertEquals($user->id, $response->json('data.id'));
+        $this->assertEquals($email, $response->json('data.email'));
         $this->assertEquals(trans('auth.register'), $response->json('message'));
         $response->assertSuccessful();
-        $response->assertHeader('access_token');
+        $response->assertHeader('authorization');
     }
 
     /**
