@@ -9,12 +9,12 @@ use App\Http\Requests\CreateMessageRequest,
     Illuminate\Support\Facades\Auth,
     Illuminate\Http\JsonResponse,
     Illuminate\Database\Eloquent\Model,
-    App\Http\Resources\MessageResource;
+    App\Http\Resources\MessageResource,
+    Carbon\Carbon;
 use App\Models\{
     Message,
     User
 };
-use Carbon\Carbon;
 
 /**
  * Class MessageController
