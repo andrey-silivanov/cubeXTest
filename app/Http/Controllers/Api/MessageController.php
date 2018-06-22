@@ -31,13 +31,16 @@ class MessageController extends ApiController
             $this->transformDataForResponse(MessageResource::collection(Message::orderByDesc('id')->paginate(10))), trans('message.all')
         );
     }
-    
-    public function check()
+
+    /**
+     * @return JsonResponse
+     */
+    public function check(): JsonResponse
     {
         $user = Auth::user();
         $message = $user->getLastMessage();
-      // dd(Carbon::now()->diffInHours($message->created_at, false));
-        if (Carbon::now()->diffInHours($message->created_at, false) >= 0) {
+
+        if ($message->created_at->diffInHours(Carbon::now(), false) < 24) {
             return $this->successResponse(
                 $this->transformDataForResponse(new CountdownResource($message)), trans('message.check'));
         } else {

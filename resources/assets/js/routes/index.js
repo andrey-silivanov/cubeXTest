@@ -53,14 +53,21 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: Admin,
-    meta: {
-      auth: true
+    auth: {
+      roles: 'manager',
+      redirect: {name: 'login'},
+      forbiddenRedirect: '/403'
     }
   },
   {
     path: '/message/:id',
     name: 'oneMessage',
-    component: oneMessage
+    component: oneMessage,
+    auth: {
+      roles: 'manager',
+      redirect: {name: 'login'},
+      forbiddenRedirect: '/403'
+    }
   },
   {
     path: '/403',
