@@ -65,7 +65,7 @@ Route::group([
     });
 
     Route::group([
-        'middleware' => ['role:user'],  ////@TODO !!!!!!!!!!!!!!!!! change
+        'middleware' => ['role:manager'],  ////@TODO !!!!!!!!!!!!!!!!! change
     ], function () {
         Route::get('/message/all', [
             'as'   => '.all',

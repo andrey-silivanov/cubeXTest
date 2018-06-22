@@ -73,7 +73,7 @@
                             color: 'success'
                         });
                         let redirectPath = 'user';
-                        if (this.$auth.check('admin')) redirectPath = 'admin';
+                        if (this.$auth.check('manager')) redirectPath = 'admin';
                         setTimeout(() => this.$router.push(redirectPath), 1500); /// redirect
                     },
                     error(err) {
