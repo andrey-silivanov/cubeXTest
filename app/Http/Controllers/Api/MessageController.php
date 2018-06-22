@@ -28,7 +28,8 @@ class MessageController extends ApiController
     public function index(): JsonResponse
     {
         return $this->successResponse(
-            $this->transformDataForResponse(MessageResource::collection(Message::orderByDesc('id')->paginate(10))), trans('message.all')
+            $this->transformDataForResponse(MessageResource::collection(Message::orderByDesc('id')->paginate(10))),
+            trans('message.all')
         );
     }
 
