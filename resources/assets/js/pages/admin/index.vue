@@ -72,3 +72,8 @@
         }
     })
 </script>
+<style scoped>
+    .centerx {
+        width: 100%;
+    }
+</style>

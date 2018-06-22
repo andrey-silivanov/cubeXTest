@@ -16,15 +16,15 @@ class MessageResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'       => $this->id,
-            'title'    => $this->title,
-            'body'     => $this->body,
-            'name'     => $this->users->name,
-            'email'    => $this->users->email,
-            'file'     => ($this->hasFile()) ? $this->pathFile : "",
-            'new'      => $this->new,
+            'id'     => $this->id,
+            'title'  => $this->title,
+            'body'   => $this->body,
+            'name'   => $this->users->name,
+            'email'  => $this->users->email,
+            'file'   => ($this->hasFile()) ? $this->pathFile : "",
+            'new'    => $this->new,
             'answered' => $this->answered,
-            'date'     => $this->created_at->format('Y-m-d')
+            'date'   => $this->created_at->format('Y-m-d H:i')
         ];
     }
 }

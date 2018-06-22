@@ -8,9 +8,6 @@
             Title
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
-            Description
-        </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
             Name
         </vs-col>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
@@ -19,8 +16,11 @@
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
             File
         </vs-col>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="3">
             Time
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
+            Completed
         </vs-col>
     </vs-row>
         <vs-row :key="index" v-for="(message, index) in messages" class="message" :class="{'new': message.new}">
@@ -31,9 +31,6 @@
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
                 {{ message.title }}
             </vs-col>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" v-html="message.body">
-
-            </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
                 {{ message.name }}
             </vs-col>
@@ -42,15 +39,17 @@
             </vs-col>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
                 <div v-if="message.file">
-                    <a :href="message.file" download>
                         <vs-button vs-color="warning" vs-type="filled" vs-icon="backup">Download</vs-button>
-                    </a>
                 </div>
                 <div v-else> - </div>
             </vs-col>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="2">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="3">
                 {{ message.date }}
             </vs-col>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-w="1">
+                    <i v-if="message.answered" class="material-icons done-icon">done</i>
+                    <i v-else class="material-icons danger-icon">clear</i>
+                </vs-col>
             </div>
         </vs-row>
     </div>
@@ -88,5 +87,11 @@
     }
     .new {
         background: #e1e1e1;
+    }
+    .done-icon {
+        color: #2ec589;
+    }
+    .danger-icon {
+        color: #e20909;
     }
 </style>
