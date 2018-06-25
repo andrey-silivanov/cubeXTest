@@ -41,7 +41,7 @@ class MessageController extends ApiController
         $user = Auth::user();
         $message = $user->getLastMessage();
 
-        if ($message->created_at->diffInHours(Carbon::now(), false) < 24) {
+        if ($message && $message->created_at->diffInHours(Carbon::now(), false) < 24) {
             return $this->successResponse(
                 $this->transformDataForResponse(new CountdownResource($message)), trans('message.check'));
         } else {

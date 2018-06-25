@@ -14,7 +14,7 @@
                                     :messages="messages"
                                 ></my-table>
                                 <vs-row>
-                                    <vs-col class="full-height" vs-offset="2" vs-type="flex" vs-justify="center"
+                                    <vs-col v-if="messages.length > 0" class="full-height" vs-offset="2" vs-type="flex" vs-justify="center"
                                             vs-align="center" vs-w="8">
                                         <vs-pagination v-if="paginate.total > 0"
                                                        :vs-total="paginate.total"
@@ -23,6 +23,10 @@
                                                        vs-color="rgb(46, 197, 137)"
                                                        vs-type="filled"></vs-pagination>
                                    </vs-col>
+                                    <vs-col v-else class="full-height" vs-offset="2" vs-type="flex" vs-justify="center"
+                                            vs-align="center" vs-w="8">
+                                        Empty
+                                    </vs-col>
                                 </vs-row>
                             </vs-card-body>
                         </vs-card>
